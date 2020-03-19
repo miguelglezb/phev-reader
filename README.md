@@ -5,13 +5,13 @@
 
 # This is the first version, which should read any file with this basic format:
 
-Column_1  ***SEPARATOR*** COLUMN_2  ***Sepatator*** COLUMN_3  ***Separator*** ...   
-Data_11                   Data_21                   Data_31
-Data_12                   Data_22                   Data_32
-Data_13                   Data_23                   Data_33
-   .                         .                         .
-   .                         .                         .
-   .                         .                         .
+|Column_1  |sep| COLUMN_2 |sep| COLUMN_3 |  
+|Data_11   |sep| Data_21  |sep| Data_31  |
+|Data_12   |sep| Data_22  |sep| Data_32  |
+|Data_13   |sep| Data_23  |sep| Data_33  |
+|   .      |sep|    .     |sep|    .     |
+|   .      |sep|    .     |sep|    .     |   
+|   .      |sep|    .     |sep|    .     |
    
 # The script works like this:
 
