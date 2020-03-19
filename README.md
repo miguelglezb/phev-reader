@@ -1,5 +1,5 @@
-#dataread
-###Module to read datafiles
+# dataread
+### Module to read datafiles
 
 Hi, my name is Miguel Gonzalez and I'm doing a python script that should (eventually) read any data in columns and extract the information in the easiest way. 
 
