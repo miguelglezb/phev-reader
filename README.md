@@ -25,8 +25,12 @@ The script works like this:
 `Data['Column_2']=[Data_21,Data_22,Data_23,...]`
 
 `filename`is the name of the file (duh), and this version can read .txt and .csv 
+
 `sep` is the separator (commas, tab, slash, etc)
-So far I haven't tried other extensions or formats, but I doubt it works on binary or if the separator is ambiguous (doble space or double tab on different columns)
+
+So far I haven't tried other extensions or formats, but I doubt it works on binary or if the separator is ambiguous (doble space or double tab on different columns).
+
 If the columns are floats, integer or scientific notation it should put them in a numpy array, so operators (sum, product, etc) should work on said columns
+
 Other kind of elements in the columns should be left as strings, including dates in the formats DD/MM/YYY, DD-MM-YYYY, MM/DD/YYY, MM-DD-YYYY, etc
 
