@@ -5,13 +5,13 @@ Hi, my name is Miguel Gonzalez and I'm doing a python script that should (eventu
 
 This is the first version, which should read any file with this basic format:
 
-|Column_1  |sep| COLUMN_2 |sep| COLUMN_3 |                                                                            
-|Data_11   |sep| Data_21  |sep| Data_31  |                                           
-|Data_12   |sep| Data_22  |sep| Data_32  |                                      
-|Data_13   |sep| Data_23  |sep| Data_33  |                                
-|   .      |sep|    .     |sep|    .     |                         
-|   .      |sep|    .     |sep|    .     |                                
-|   .      |sep|    .     |sep|    .     |                       
+| Column_1  | sep | COLUMN_2 | sep | COLUMN_3 |                                                                            
+| Data_11   | sep | Data_21  | sep | Data_31  |                                           
+| Data_12   | sep | Data_22  | sep | Data_32  |                                      
+| Data_13   | sep | Data_23  | sep | Data_33  |                                
+|   .      | sep |    .     | sep |    .     |                         
+|   .      | sep |    .     | sep |    .     |                                
+|   .      | sep |    .     | sep |    .     |                       
    
 The script works like this:
 
