@@ -19,15 +19,23 @@ The script works like this:
 `import dataread as dr`
 
 `Data=dr.extract_data(filename,sep)`
-Typing 
+
+After this, typing 
+
 `Data['Column_1']`
+
 will give you 
+
 ```[Data_11,Data_12,Data_13,...]```
+
 Likewise
+
 `Data['Column_2']`
 
 will have the output
+
 ```[Data_21,Data_22,Data_23,...]```
+
 
 `filename`is the name of the file (duh), and this version can read .txt and .csv 
 
