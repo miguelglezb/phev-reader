@@ -16,12 +16,12 @@ This is the first version, which should read any file with this basic format:
    
 The script works like this:
 
-import dataread as dr
+`import dataread as dr`
 
-Data=dr.extract_data(filename,sep)
+`Data=dr.extract_data(filename,sep)`
 
-Data['Column_1']=[Data_11,Data_12,Data_13,...]
-Data['Column_2']=[Data_21,Data_22,Data_23,...]
+`Data['Column_1']=[Data_11,Data_12,Data_13,...]`
+`Data['Column_2']=[Data_21,Data_22,Data_23,...]`
 
 filename is the name of the file (duh), and this version can read .txt and .csv 
 sep is the separator (commas, tab, slash, etc)
