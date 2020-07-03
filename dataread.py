@@ -1,12 +1,33 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import matplotlib.pyplot as plt
 import numpy as np
-#~~~~~ Trial input ~~~~~#
-#filename = 'dataread/DJ.csv'
-#sep = ','
 
+
+def extract_headers_bet_spaces(filename):
+    f = open(filename,"r")
+    raw_data = f.read().split('\n')
+    f.close()
+    Row1, Headers = raw_data[0].strip(), []
+    while len(Row1)>1:
+        h = Row1.find(' ')
+        Headers.append(Row1[:h])
+        Row1 = Row1[h:].strip() + ' '
+    return Headers
+
+def extract_data_columns_bet_spaces(filename):
+    f = open(filename,"r")
+    raw_data = f.read().split('\n')
+    f.close()
+    Columns, Headers = [], extract_headers_bet_spaces(filename)
+    for i in Headers:
+        Columns.append([])
+    for row in raw_data[1:-1]:
+        for col in Columns:
+         h = row.find(' ')
+         col.append(float(row[:h]))
+         row = row[h:].strip() + ' '
+    return Columns
 
 def extract_data_columns(R_data,ncols,sep):
     Columns = []
@@ -21,15 +42,24 @@ def extract_data_columns(R_data,ncols,sep):
                 j[1].append(split_col[j[0]])
     return Columns
 
-def extract_data(filename,sep,pheaders=True):
+
+##### For general datafiles with normal separation (variable 'sep') #####
+
+
+
+
+def extract_data(filename,sep=' ',pheaders=True):
     f = open(filename,"r")
     raw_data = f.read().split('\n')
-    headers = raw_data[0].split(sep)
-
-    if pheaders==True:
+    if sep == ' ':
+        headers = extract_headers_bet_spaces(filename)
+        columns = extract_data_columns_bet_spaces(filename)
+ #############################################################       
+    else:
+        headers = raw_data[0].split(sep)
+        columns = extract_data_columns(raw_data,len(headers),sep)
+    if pheaders == True:
         print(headers) 
-
-    columns = extract_data_columns(raw_data,len(headers),sep)
     formatted_columns = []
     for col in enumerate(columns):
         formatted_columns.append(np.array(col[1]))    
@@ -39,6 +69,9 @@ def extract_data(filename,sep,pheaders=True):
     for h,c in zip(headers, formatted_columns):
         Data.update({h:c})
     return Data
+
+
+##### For phantom .ev files ===>  [1 XX]  [2 YY]  [3 ZZ]   #####
 
 def phantom_evdata(filename,pheaders=True):
     f = open(filename,"r")
@@ -50,7 +83,7 @@ def phantom_evdata(filename,pheaders=True):
     width_header = Row1.find('[',Row1.find(']')) - Row1.find('[')
     headers, columns,  = [], []
     for i in range(ncols):
-        headers.append(Row1[l_side+i*width_header:r_side+i*width_header].strip())
+        headers.append(Row1[l_side+i*width_header:r_side+i*width_header+1].strip())
         columns.append([])
     if pheaders==True:
         print(headers)
@@ -82,3 +115,5 @@ def phantom_evdata(filename,pheaders=True):
     for h,c in zip(headers, formatted_columns):
         Data.update({h:c})
     return Data
+
+    
