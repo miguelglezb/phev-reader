@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+from matplotlib import rc
+import matplotlib.pyplot as plt
 
 
 def extract_headers_bet_spaces(filename):
@@ -71,7 +73,7 @@ def extract_data(filename,sep=' ',pheaders=True):
     return Data
 
 
-##### For phantom .ev files ===>  [1 XX]  [2 YY]  [3 ZZ]   #####
+##### For phantom .ev files, headers type ===>  [1 XX]  [2 YY]  [3 ZZ]   #####
 
 def phantom_evdata(filename,pheaders=True):
     f = open(filename,"r")
@@ -79,12 +81,19 @@ def phantom_evdata(filename,pheaders=True):
     f.close()
     Row1 = raw_data[0]
     ncols = len(Row1.split(']'))-1
-    l_side, r_side = Row1.find('[')+3, Row1.find(']')-1 
-    width_header = Row1.find('[',Row1.find(']')) - Row1.find('[')
     headers, columns,  = [], []
-    for i in range(ncols):
-        headers.append(Row1[l_side+i*width_header:r_side+i*width_header+1].strip())
+    for i in Row1.split("]")[:-1]:
         columns.append([])
+        headers.append(i.strip().strip("[").strip())
+
+
+
+#    l_side, r_side = Row1.find('[')+3, Row1.find(']')-1 
+#    width_header = Row1.find('[',Row1.find(']')) - Row1.find('[')
+#    headers, columns,  = [], []
+#    for i in range(ncols):
+#        headers.append(Row1[l_side+i*width_header:r_side+i*width_header+1].strip())
+#        columns.append([])
     if pheaders==True:
         print(headers)
 
@@ -117,3 +126,19 @@ def phantom_evdata(filename,pheaders=True):
     return Data
 
     
+
+##### This will be a new module for a personalized default plot style  #####
+
+def plot_format(xlab,ylab, labeling=False):
+    rc('font',**{'family':'sans-serif','sans-serif':['Helvetica']})
+    rc('text', usetex=True)
+    plt.xlabel(r'$' + xlab + '$', fontsize='x-large')
+    plt.ylabel(r'$' + ylab + '$', fontsize='x-large')
+    plt.tick_params(labelsize='15')
+    if labeling == True:
+        plt.legend(fontsize=15)
+    elif labeling == False:
+        pass
+    else: 
+        print('Option not valid for labeling. Set as True for show.')
+
