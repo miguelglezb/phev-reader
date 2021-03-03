@@ -84,7 +84,7 @@ def phantom_evdata(filename,pheaders=True):
     headers, columns,  = [], []
     for i in Row1.split("]")[:-1]:
         columns.append([])
-        headers.append(i.strip().strip("[").strip())
+        headers.append(i.strip('#').strip().strip("[").strip().strip('1234567890').strip())
 
 
 
