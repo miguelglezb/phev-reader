@@ -84,7 +84,7 @@ def phantom_evdata(filename,pheaders=True):
     headers, columns,  = [], []
     for i in Row1.split("]")[:-1]:
         columns.append([])
-        headers.append(i.strip('#').strip().strip("[").strip().strip('1234567890').strip())
+        headers.append(i.strip('#').strip().strip("[").strip().lstrip('1234567890').strip())
 
 
 
@@ -142,3 +142,23 @@ def plot_format(xlab,ylab, labeling=False):
     else: 
         print('Option not valid for labeling. Set as True for show.')
 
+
+#Conversion of units from Phantom to cgs, day, year... 
+
+class constants:
+    mass = 1.989E33 
+    time = 1.594E3 
+    dist = 6.96E10
+    angmom = mass*dist**2/time
+    yr = time/(24*3600*365)
+    day = time/(24*3600)
+
+    def __init__(self,mass=mass,time=time,dist=dist,yr=yr,day=day,angmom=angmom):
+        """Phantom units in cgs"""
+        self.G = G 
+        self.mass = mass 
+        self.time = time 
+        self.dist = dist
+        self.yr = yr 
+        self.day = day 
+        
