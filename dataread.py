@@ -150,23 +150,30 @@ class constants:
     time = 1.594E3 
     dist = 6.96E10
     vel = dist/time
-    angmom = mass*dist**2/time
-    ener = mass*(dist/time)**2
-    enerm = (dist/time)**2
+    dens = mass/dist**3
+    spangmom = dist**2/time
+    spener = (dist/time)**2
+    ener = mass*spener
+    angmom = mass*spangmom
+    pressure = ener/dist**3 
     yr = time/(24*3600*365)
     day = time/(24*3600)
 
     def __init__(self,mass=mass,time=time,dist=dist,yr=yr,day=day,
-                    angmom=angmom,ener=ener,enerm=enerm,vel=vel):
+                    spangmom=spangmom,ener=ener,spener=spener,vel=vel,
+                    angmom=angmom,dens=dens, pressure=pressure):
         """Phantom units in cgs"""
         self.G = G 
         self.mass = mass 
         self.time = time 
         self.dist = dist
         self.vel = vel
+        self.dens = dens
+        self.spangmom = spangmom
+        self.spener = spener
         self.angmom = angmom
         self.ener = ener
-        self.enerm = enerm
+        self.pressure = pressure
         self.yr = yr 
         self.day = day 
     
