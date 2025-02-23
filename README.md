@@ -27,7 +27,7 @@ These files are typically in a table form:
 **phev-reader** can be used from a jupyter notebook or python script:
 
 ```python
-import phev-reader as phev
+import phev
 
 phdf = phev.evreader('energy.ev')
 ```
