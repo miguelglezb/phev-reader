@@ -11,6 +11,53 @@ import warnings
 
 
 class Evdf(pd.DataFrame):
+    """
+    A subclass of pandas.DataFrame made for phev-reader, which is designed to store and 
+    manage physical quantities, units, and conversion values for columns.
+
+    This class extends the functionality of pandas DataFrame by incorporating metadata attributes that define the physical 
+    meaning of each column of ev files.
+
+    Attributes:
+    ----------
+    phys_quantity : dict
+        A dictionary mapping column keys to their corresponding physical quantities.
+    units : dict
+        A dictionary mapping column keys to their corresponding units.
+    conv_value : dict
+        A dictionary mapping column keys to their conversion values.
+
+    Methods:
+    --------
+    assign_default_quants_units():
+        Assigns default physical quantities, units, and conversion values 
+        to each column in the DataFrame.
+
+    column_units(column_key):
+        Returns the unit associated with a given column key.
+
+    column_physical_quantity(column_key):
+        Returns the physical quantity associated with a given column key.
+
+    column_conversion_value(column_key):
+        Returns the conversion value associated with a given column key.
+
+    edit_physical_quantity(column_key, new_quantity_name):
+        Edits the physical quantity tag of a specified column.
+
+    convert_units(column_key, new_units, new_conversion_val=0):
+        Changes the unit of a given column and updates the conversion value.
+        If the unit is not in the predefined list, a custom conversion 
+        factor must be provided.
+
+    Notes:
+    ------
+    - This class inherits from pandas.DataFrame and retains all its functionalities.
+    - The physical quantities, units, and conversion values are stored in the 
+      `.attrs` dictionary of the DataFrame.
+    - Conversion values are expected to be consistent with the predefined unit dictionary.
+    """
+
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -79,6 +126,23 @@ class Evdf(pd.DataFrame):
 
 
 def evreader(filename, pheaders=True):
+    """
+    Reads an .ev file and converts its columns and rows into an Evdf (extended pandas DataFrame) object.
+
+    Parameters
+    ----------
+    filename : str
+        Path to the .ev file. The file must remain unchanged from the moment it was created by Phantom.
+
+    pheaders : bool, optional, default=True
+        If True, prints the column names after removing the brackets characteristic of the .ev file.
+
+    Returns
+    -------
+    evdf : Evdf
+        A DataFrame-like object containing the parsed data, with assigned physical quantities and units.
+    """
+
     f = open(filename, "r")
     raw_data = f.read().split("\n")
     f.close()
