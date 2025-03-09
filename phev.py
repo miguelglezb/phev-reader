@@ -39,7 +39,7 @@ class Evdf(pd.DataFrame):
     column_physical_quantity(column_key):
         Returns the physical quantity associated with a given column key.
 
-    column_conversion_value(column_key):
+    column_conversion_rate(column_key):
         Returns the conversion value associated with a given column key.
 
     edit_physical_quantity(column_key, new_quantity_name):
@@ -85,20 +85,39 @@ class Evdf(pd.DataFrame):
         """Returns the unit associated with a given column key."""
         return self.attrs["units"].get(column_key, None)
 
-    def column_physical_quantity(self, column_key):
+    def column_physical_quantity(self, column_key:str):
         """Returns the physical quantity associated with a given column key."""
         return self.attrs["phys_quantity"].get(column_key, None)
 
-    def column_conversion_value(self, column_key):
+    def column_conversion_rate(self, column_key:str):
         """Returns the conversion value associated with a given column key."""
         return self.attrs["conv_value"].get(column_key, None)
 
-    def edit_physical_quantity(self, column_key, new_quantity_name):
+    def edit_physical_quantity(self, column_key:str, new_quantity_name:str):
         """It allow to edit the tag of physical quantity in a given column of the Ev DataFrame."""
         self.attrs["phys_quantity"].update({column_key: new_quantity_name})
 
-    def convert_units(self, column_key, new_units, new_conversion_val=0): 
-        """It allow to edit the tag of physical units in a given column of the Ev DataFrame."""
+    def convert_units(self, column_key:str, new_units:str, new_conversion_val:float=0, warning_new_conv_val:bool=True): 
+        """It allow to edit the tag of physical units in a given column of the Ev DataFrame.
+            
+        Parameters
+        ----------
+        column_key : string
+            Given column name of the Evdf.
+        
+        new_units: string
+            New units for the column. If the new units are not present in physical quantity list, 
+            and/or the physical quantity is not recognised, a new conversion rate (new_conversion_val) is required.
+
+        new_conversion_val: float
+            Conversion units for the new units. Only used if the new units are not recognised by phev and, in that case, 
+            it needs to be specified. This value will be multiplied by the column so that 
+            new_column_val = old_column_val * new_conversion_val. Default is 0. 
+
+        warning_new_conv_val: bool
+            If True, it will give a warning when new_units is not present in physical quantity list. Default is True.
+
+        """
         phys_quants = self.column_physical_quantity(column_key)
 
         units_dict = units.phys_quantities_dict
@@ -108,17 +127,17 @@ class Evdf(pd.DataFrame):
         if quants_and_unit_stored:
             self.attrs["units"].update({column_key: new_units})
             new_conversion_val = units.merged_units_dict[new_units] 
-            self[column_key] = self[column_key] / self.column_conversion_value(column_key)
+            self[column_key] = self[column_key] / self.column_conversion_rate(column_key)            
             self.attrs["conv_value"].update({column_key: new_conversion_val})
             self[column_key] = self[column_key] * new_conversion_val 
-            print(f"Units changed in column {column_key} to {new_units}")
             return None
         elif phys_quants in units_dict.keys() and new_conversion_val > 0:
             self.attrs["units"].update({column_key: new_units})
-            self[column_key] = self[column_key] / self.column_conversion_value(column_key)
+            self[column_key] = self[column_key] / self.column_conversion_rate(column_key)
+            self.attrs["conv_value"].update({column_key: new_conversion_val})
             self[column_key] = self[column_key] * new_conversion_val 
-            warnings.warn(f"Warning: '{new_units}' not found in unit list. Changes are made to new unit by user.", stacklevel=2)
-            print(f"Units changed in column {column_key} to {new_units}")
+            if warning_new_conv_val:
+                warnings.warn(f"Warning: '{new_units}' not found in unit list. Changes are made to new unit by user.", stacklevel=2)
             return None
         elif new_conversion_val == 0:
             raise ValueError("Invalid conversion value")
