@@ -1,4 +1,3 @@
-.. My Project documentation master file
 
 phev-reader documentation
 =======================================
