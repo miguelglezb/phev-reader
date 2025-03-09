@@ -1,14 +1,21 @@
 .. My Project documentation master file
 
-Welcome to My Project's documentation!
+phev-reader documentation
 =======================================
 
+Phantom ev file reader (phev-reader) code, by Miguel Gonzalez-Bolivar
+
+
+- Code repository: https://github.com/miguelglezb/phev-reader 
+- Documentation: https://phev-reader.readthedocs.io/en/latest/
+
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
    introduction
-   installation
-   usage
+   examples/example_1
+   examples/example_2
+   examples/example_3
    api
    contributing
