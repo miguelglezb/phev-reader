@@ -25,7 +25,7 @@ autodoc_mock_imports = []  # Add any modules that shouldn't be imported
 
 # HTML output options
 html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+html_static_path = []
 
 def setup(app):
     app.add_css_file('custom.css')  # Optional: Add custom CSS styling
