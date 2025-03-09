@@ -4,6 +4,9 @@
 
 This Python module reads .ev files, which are made by the [Phantom](https://github.com/danieljprice/phantom) code. The data is stored as [pandas DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html). 
 
+## Documentation
+
+Full documentation of **phev-reader** can be found [here](https://phev-reader.readthedocs.io/en/latest/).
 
 ## Installation: 
 
@@ -58,4 +61,3 @@ Out[2]:
 [7001 rows x 24 columns]
 
 ```
-**phev-reader**
