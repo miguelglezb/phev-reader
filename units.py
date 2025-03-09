@@ -158,15 +158,16 @@ angmom_dict = {
 
 
 phys_quantities_dict = {
-    "time": ["s", "min", "hr", "d", "yr", "ph. time units"],
-    "mass": ["g", "kg", "ton", "m_moon", "m_earth", "m_jupiter", "m_sun", "ph. mass units"],
-    "distance": ["cm", "m", "km", "r_sun", "au", "ph. distance units"],
-    "velocity": ["cm/s", "m/s", "km/s", "km/h", "km/d", "ph. velocity units"],
-    "density": ["g/cm^3", "kg/m^3", "ph. density units"],
-    "momentum": ["g cm/s", "g m/s", "kg m/s", "ph. momentum units"],
-    "energy": ["erg", "J", "ph. energy units"],
-    "angular momentum": ["g cm^2/s", "kg m^2/s", "ph. angular momentum units"],
+    "time": time_dict.keys(),
+    "mass": mass_dict.keys(),
+    "distance": distance_dict.keys(),
+    "velocity": velocity_dict.keys(),
+    "density": density_dict.keys(),
+    "momentum": momentum_dict.keys(),
+    "energy": energy_dict.keys(),
+    "angular momentum": angmom_dict.keys(),
 }
+
 
 merged_units_dict = {
     **time_dict,
@@ -258,6 +259,7 @@ def phys_quants_units_default(column_key):
         "ekin": energy_default_quants_units,
         "erad": energy_default_quants_units,
         "etherm": energy_default_quants_units,
+        "total energy": energy_default_quants_units,
         "totmom": momentum_default_quants_units,
         "totmomall": momentum_default_quants_units,
         "angmom": angmom_default_quants_units,
@@ -267,4 +269,4 @@ def phys_quants_units_default(column_key):
     if column_key in quant_dict.keys():
         return quant_dict[column_key]
     else:
-        return ["Null", "Unknown quantity", 1.0]
+        return ["Unknown quantity", "Unknown units", 1.0]
