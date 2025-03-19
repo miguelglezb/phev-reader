@@ -1,6 +1,7 @@
 # phev-reader
 > Module to read .ev text files.
 
+![Test Status](https://github.com/miguelglezb/phev-reader/actions/workflows/test.yml/badge.svg)
 
 This Python module reads .ev files, which are made by the [Phantom](https://github.com/danieljprice/phantom) code. The data is stored as [pandas DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html). 
 
