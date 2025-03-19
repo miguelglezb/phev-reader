@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="phev-reader",  # Adjust if needed
+    name="phev",  # Adjust if needed
     version="0.1.0",
     packages=find_packages(),  # Automatically find submodules
     install_requires=["pandas","numpy"],  # Add dependencies here
