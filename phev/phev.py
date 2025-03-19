@@ -5,7 +5,7 @@ import numpy as np
 from matplotlib import rc
 import matplotlib.pyplot as plt
 import pandas as pd
-import units
+import phev.units
 import warnings
 
 
@@ -70,7 +70,7 @@ class Evdf(pd.DataFrame):
         """Assigns default physical quantities, units, and conversion values to Evdf attributes."""
         quants_atr, units_atr, conv_value_atr = {}, {}, {}
         for column_key in self.keys():
-            default_qu = units.phys_quants_units_default(column_key)
+            default_qu = phev.units.phys_quants_units_default(column_key)
             quants_atr[column_key], units_atr[column_key], conv_value_atr[column_key] = default_qu
 
         self.attrs.update(
@@ -120,13 +120,13 @@ class Evdf(pd.DataFrame):
         """
         phys_quants = self.column_physical_quantity(column_key)
 
-        units_dict = units.phys_quantities_dict
+        units_dict = phev.units.phys_quantities_dict
         quants_and_unit_stored = (phys_quants in units_dict.keys()) and (new_units in units_dict[phys_quants])                                    
 
 
         if quants_and_unit_stored:
             self.attrs["units"].update({column_key: new_units})
-            new_conversion_val = units.merged_units_dict[new_units] 
+            new_conversion_val = phev.units.merged_units_dict[new_units] 
             self[column_key] = self[column_key] / self.column_conversion_rate(column_key)            
             self.attrs["conv_value"].update({column_key: new_conversion_val})
             self[column_key] = self[column_key] * new_conversion_val 

@@ -1,8 +1,8 @@
 import pytest
 import numpy as np
 from pathlib import Path
-import phev
-import units
+import phev.phev 
+import phev.units
 
 
 @pytest.fixture
@@ -34,18 +34,18 @@ class TestPhev:
     )
     def test_phys_quantities(self, select_evfile, col_name, quants):
         """Test using the select_evfile fixture."""
-        evdf = phev.evreader(select_evfile)
+        evdf = phev.phev.evreader(select_evfile)
         assert evdf.column_physical_quantity(col_name) == quants
 
     @pytest.mark.parametrize("select_evfile", ["mock_separation.ev"], indirect=True)
     def test_unknown_phys_quantities(self, select_evfile):
         """Test using the select_evfile fixture."""
-        evdf = phev.evreader(select_evfile)
+        evdf = phev.phev.evreader(select_evfile)
         assert evdf.column_physical_quantity("unicorn_mass") == "Unknown quantity"
 
     @pytest.mark.parametrize("select_evfile", ["mtSink0001N01.ev"], indirect=True)
     def test_ph_units(self, select_evfile):
-        evdf = phev.evreader(select_evfile)
+        evdf = phev.phev.evreader(select_evfile)
         assert evdf.column_units("time") == "ph. time units"
         assert evdf.column_units("x") == "ph. distance units"
         assert evdf.column_units("y") == "ph. distance units"
@@ -58,7 +58,7 @@ class TestPhev:
 
     @pytest.mark.parametrize("select_evfile", ["mock_separation.ev"], indirect=True)
     def test_ph_unknown_units(self, select_evfile):
-        evdf = phev.evreader(select_evfile)
+        evdf = phev.phev.evreader(select_evfile)
         assert evdf.column_units("unicorn_mass") == "Unknown units"
 
 #    @pytest.mark.parametrize(
@@ -71,7 +71,7 @@ class TestPhev:
 
     @pytest.mark.parametrize("select_evfile", ["mtSink0001N01.ev"], indirect=True)
     def test_conversion(self, select_evfile):
-        evdf = phev.evreader(select_evfile)
+        evdf = phev.phev.evreader(select_evfile)
         orig_column_time = evdf["time"]
         orig_column_x = evdf["x"]
         orig_column_mass = evdf["mass"]
@@ -82,17 +82,17 @@ class TestPhev:
         evdf.convert_units(column_key="vx", new_units="km/s")
 
         assert np.array_equal(
-            orig_column_time.values * units.years, evdf["time"].values
+            orig_column_time.values * phev.units.years, evdf["time"].values
         )
         assert np.array_equal(
-            orig_column_x.values * units.centimeters, evdf["x"].values
+            orig_column_x.values * phev.units.centimeters, evdf["x"].values
         )
-        assert np.array_equal(orig_column_vx.values * units.km_s, evdf["vx"].values)
-        assert np.array_equal(orig_column_mass.values * units.tons, evdf["mass"].values)
+        assert np.array_equal(orig_column_vx.values * phev.units.km_s, evdf["vx"].values)
+        assert np.array_equal(orig_column_mass.values * phev.units.tons, evdf["mass"].values)
 
     @pytest.mark.parametrize("select_evfile", ["mtSink0001N01.ev"], indirect=True)
     def test_unknown_conversion(self, select_evfile):
-        evdf = phev.evreader(select_evfile, pheaders=False)
+        evdf = phev.phev.evreader(select_evfile, pheaders=False)
         evdf_converted_to_dropbears = evdf.copy()
         dropbear_conversion_rate = 666.42069
         evdf_converted_to_dropbears.convert_units(
