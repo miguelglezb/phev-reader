@@ -10,20 +10,18 @@ def select_evfile(request):
     """Fixture that returns a full path to the requested EV file."""
     return Path("./data") / request.param
 
-#@pytest.fixture
-#def get_all_evfiles():
-#    return list(Path("./data").glob("*.ev"))
+@pytest.fixture
+def get_all_evfiles():
+    return list(Path("./data").glob("*.ev"))
 
 
 class TestPhev:
     
-
-
-#    @pytest.mark.parametrize("all_evfiles", get_all_evfiles)
-#    def test_evdf(self, all_evfiles):
-#        evdf = phev.evreader(all_evfiles)
-#        assert evdf is not None
-#        assert isinstance(evdf, phev.Evdf)
+    def test_evdf(self, get_all_evfiles):
+        for evfile in get_all_evfiles:
+            evdf = phev.phev.evreader(evfile)
+            assert evdf is not None
+            assert isinstance(evdf, phev.phev.Evdf)
 
     @pytest.mark.parametrize(
         "select_evfile,col_name,quants",
@@ -61,13 +59,11 @@ class TestPhev:
         evdf = phev.phev.evreader(select_evfile)
         assert evdf.column_units("unicorn_mass") == "Unknown units"
 
-#    @pytest.mark.parametrize(
-#        "all_evfiles", get_all_evfiles(), ids=lambda path: path.name
-#    )
-#    def test_conversion_rate_default(self, all_evfiles):
-#        evdf = phev.evreader(all_evfiles)
-#        for col_name in evdf.keys():
-#            assert evdf.column_conversion_rate(col_name) == 1.0
+    def test_conversion_rate_default(self, get_all_evfiles):
+        for evfile in get_all_evfiles:
+            evdf = phev.phev.evreader(evfile)        
+            for col_name in evdf.keys():
+                assert evdf.column_conversion_rate(col_name) == 1.0
 
     @pytest.mark.parametrize("select_evfile", ["mtSink0001N01.ev"], indirect=True)
     def test_conversion(self, select_evfile):
