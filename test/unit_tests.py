@@ -1,7 +1,7 @@
 import pytest
 import numpy as np
 from pathlib import Path
-import phev
+import phev-reader as phev
 import units
 
 
